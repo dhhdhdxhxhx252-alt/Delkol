@@ -108,26 +108,6 @@
 > «Windows защитила ваш компьютер». Нажмите **Подробнее → Выполнить в любом случае** — это ожидаемое поведение
 > для неподписанных приложений.
 
-### 📤 Как выложить сборки на GitHub
-
-GitHub **не принимает файлы больше 100 МБ** через обычный `git push` (а `Delkol.exe` весит ~201 МБ).
-Поэтому в репозиторий отправляем исходники, а сборки — в раздел **Releases**:
-
-```bash
-# 1. Создаём релиз и прикрепляем к нему оба EXE-файла
-gh release create v1.2.0 --title "Delkol 1.2.0" --notes "Первый публичный релиз" \
-  "builds/Portable/Delkol-Portable-1.2.0.exe" \
-  "builds/Установщик/Delkol-Setup-1.2.0.exe"
-
-# 2. Вариант «папкой» упаковываем в архив (PowerShell)
-powershell -Command "Compress-Archive -Path 'builds/win/*' -DestinationPath 'builds/Delkol-1.2.0-win-x64.zip'"
-gh release upload v1.2.0 "builds/Delkol-1.2.0-win-x64.zip"
-```
-
-Папка `builds/` добавлена в `.gitignore` именно из-за лимита 100 МБ. Если нужно хранить бинарники прямо в git —
-подключите [Git LFS](https://git-lfs.com) (`git lfs track "builds/**"`) или соберите сборки в CI:
-готовый workflow лежит в [`.github/workflows/build.yml`](.github/workflows/build.yml) и прикладывает
-три варианта к релизу автоматически.
 
 ---
 
@@ -154,18 +134,7 @@ gh release upload v1.2.0 "builds/Delkol-1.2.0-win-x64.zip"
 <td width="50%"><img src="docs/screenshots/08-search.png" alt="Поиск"><br><sub><b>Ctrl + K</b> — одна палитра для разделов, макросов, групп и конфигов</sub></td>
 <td width="50%"><img src="docs/screenshots/11-notifications.png" alt="Уведомления"><br><sub><b>Уведомления</b> — что произошло, пока вы играли</sub></td>
 </tr>
-<tr>
-<td width="50%"><img src="docs/screenshots/12-theme-light.png" alt="Светлая тема"><br><sub><b>Светлая тема</b> — полная палитра, а не инверсия</sub></td>
-<td width="50%"><img src="docs/screenshots/01-loading.png" alt="Экран загрузки"><br><sub><b>Загрузка</b> — сплэш с собственным артом</sub></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/screenshots/02-auth.png" alt="Вход и регистрация"><br><sub><b>Вход</b> — аккаунт, регистрация, восстановление пароля или гостевой режим</sub></td>
-<td width="50%"><img src="docs/screenshots/13-hud.png" alt="HUD-пилюля" width="116"><br><sub><b>HUD-пилюля</b> — прогресс макросов у края экрана, всегда поверх и без кражи фокуса</sub></td>
-</tr>
 </table>
-
-> Все снимки сделаны автоматически из настоящего интерфейса:
-> `npx electron scripts/capture-screenshots.cjs` (см. [инструмент скриншотов](#-полезные-команды)).
 
 ---
 
@@ -180,30 +149,6 @@ gh release upload v1.2.0 "builds/Delkol-1.2.0-win-x64.zip"
 | Дистрибутив | **electron-builder 26** — NSIS-установщик, portable-сборка и распакованная папка |
 | Шрифты | Свои Inter и Manrope (`src/fonts`) — без внешних запросов |
 
-### Как это устроено
-
-```
-loading → auth → main        три окна одного бандла (?window=loading|auth|main)
-        ↘ hud                отдельное прозрачное окно-пилюля у края экрана
-```
-
-- Renderer-код один: `?window=...` выбирает экран, прелоад `electron/preload.cjs` даёт мост `window.delkol`
-  (управление окном, уведомления, HUD, оптимизатор).
-- Данные живут локально и мгновенно, а в облако уходит снимок рабочего пространства
-  (макросы, группы, настройки, профиль) — конфликты решаются «последняя запись побеждает».
-- Движок макросов (`src/macros/engine.ts`) — порт алгоритмов из проекта neverfish: четыре состояния цикла,
-  мини-игра с обучением профиля рыбы, watchdog-таймауты и лимиты. Работает на симулированной модели игры.
-
----
-
-## 🛠 Сборка из исходников
-
-Нужен **Node.js 20+** и npm.
-
-```bash
-npm ci                # установка зависимостей (+ нативные модули Electron)
-npm run build         # веб-бандл + обе сборки в release/
-```
 
 ### 📌 Полезные команды
 
@@ -216,9 +161,6 @@ npm run build         # веб-бандл + обе сборки в release/
 | `npm run build:exe` | Только дистрибутивы → `release/` (NSIS + portable) |
 | `npm run test:engine` | Тесты движка макросов (симуляция цикла) |
 | `npx electron scripts/capture-screenshots.cjs` | Переснять все скриншоты интерфейса для README и документации |
-
-Скриншоты снимаются из настоящего приложения: скрипт поднимает окна Electron, кликает по разделам
-и сохраняет PNG в `docs/screenshots` (нужен флаг `--visible`, если хочется видеть окна на экране).
 
 ---
 
@@ -243,23 +185,6 @@ Delkol/
 ├── index.html               # точка входа однофайлового бандла
 └── electron-builder.yml     # конфигурация дистрибутивов
 ```
-
----
-
-## ☁️ Облако, аккаунты и сообщество
-
-Приложение работает и без интернета — в гостевом режиме всё хранится локально. Чтобы получить синхронизацию,
-профиль в сообществе и «Топ конфиги», нужен проект Supabase:
-
-1. Подробная пошаговая инструкция — **[docs/SUPABASE_SETUP.md](docs/SUPABASE_SETUP.md)**.
-2. Схема базы (таблицы, функции, RLS) — **[supabase/schema.sql](supabase/schema.sql)**; скрипт можно запускать повторно.
-3. Наполнение демо-контентом (1200 аккаунтов и ~140 конфигов):
-   ```bash
-   SUPABASE_SECRET_KEY=sb_secret_... node scripts/seed-community.mjs
-   ```
-
-В клиент вшит только публичный (publishable) ключ — он безопасен, потому что доступ к данным закрыт
-Row Level Security. Секретный ключ остаётся только на вашей машине.
 
 ---
 
@@ -316,9 +241,7 @@ Row Level Security. Секретный ключ остаётся только н
 
 © 2026 **Delkol**. Все права защищены.
 
-Файл лицензии в репозитории пока не добавлен: если планируете открывать код, положите сюда `LICENSE`
-(MIT или Apache-2.0 подходят для такого стека) и обновите эту секцию.
 
 <div align="center">
-<sub>Сделано с любовью к аккуратным интерфейсам и спокойной игре · Delkol 1.2.0</sub>
+<sub>Delkol 1.2.0</sub>
 </div>
