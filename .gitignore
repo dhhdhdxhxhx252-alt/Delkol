@@ -1,0 +1,20 @@
+# Зависимости
+node_modules
+
+# Артефакты сборки
+dist-web
+release
+*.log
+
+# Временные файлы инструментов
+scripts/.engine-tmp/
+
+# Готовые сборки (builds/win, builds/Portable, builds/Установщик).
+# GitHub через git не принимает файлы больше 100 МБ, а Delkol.exe весит ~201 МБ:
+# выкладывайте сборки в Releases (см. README) или включите Git LFS и уберите эту строку.
+builds/
+
+# Системное
+.DS_Store
+Thumbs.db
+desktop.ini
