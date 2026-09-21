@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420" role="img" aria-label="Delkol — ваше пространство для макросов, групп и комфортной игры">
+  <title>Delkol</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0a0c" />
+      <stop offset="0.55" stop-color="#100d18" />
+      <stop offset="1" stop-color="#0a0a0c" />
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#8b7ac6" stop-opacity="0.42" />
+      <stop offset="0.6" stop-color="#6b5aa8" stop-opacity="0.14" />
+      <stop offset="1" stop-color="#6b5aa8" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a99ae0" />
+      <stop offset="1" stop-color="#5d4d95" />
+    </linearGradient>
+    <linearGradient id="word" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" />
+      <stop offset="1" stop-color="#cdc5ea" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9b8ad6" />
+      <stop offset="1" stop-color="#6c5aa6" />
+    </linearGradient>
+    <linearGradient id="hairline" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8b7ac6" stop-opacity="0.7" />
+      <stop offset="0.6" stop-color="#8b7ac6" stop-opacity="0.1" />
+      <stop offset="1" stop-color="#8b7ac6" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="420" fill="url(#bg)" />
+  <ellipse cx="980" cy="205" rx="430" ry="250" fill="url(#glow)" />
+  <rect x="1" y="1" width="1198" height="418" rx="26" fill="none" stroke="#ffffff" stroke-opacity="0.07" />
+
+  <!-- Логотип -->
+  <rect x="72" y="118" width="118" height="118" rx="30" fill="url(#tile)" />
+  <g transform="translate(93 139) scale(0.0712)">
+    <path fill="#ffffff" fill-rule="evenodd" d="M459 58C459 49 469 44 483 48C576 63 657 111 684 205C807 244 893 322 937 430C960 487 974 548 971 614C974 687 948 741 894 778C848 810 796 822 736 819C640 816 557 777 488 741C484 738 481 741 478 747C448 787 396 806 350 806C340 807 334 800 338 789C341 778 351 768 356 753C362 737 363 724 369 715C375 706 386 702 401 700C371 685 340 685 315 693C263 710 239 754 244 803C246 843 269 875 309 889C336 847 385 820 428 819C469 815 504 827 529 842C540 849 544 858 541 865C537 875 516 873 501 879C468 892 452 915 412 925C407 927 412 930 421 931C449 936 472 953 491 970C515 992 536 1002 557 1007C566 1009 569 1017 568 1024C567 1033 558 1036 544 1033C431 1029 326 990 251 925C156 843 108 723 108 588C105 458 146 347 225 274C278 224 342 208 396 192C429 182 449 172 456 145C460 124 458 85 459 58ZM591 614C616 592 653 597 684 604C731 614 765 637 779 669C796 705 767 737 739 739C703 744 672 733 643 719C615 706 589 685 580 658C575 643 578 626 591 614Z" />
+  </g>
+
+  <!-- Название и слоган -->
+  <text x="216" y="186" fill="url(#word)" font-family="'Segoe UI', Inter, Arial, Helvetica, sans-serif" font-size="74" font-weight="700" letter-spacing="-1">Delkol</text>
+  <text x="219" y="226" fill="#a9a6bf" font-family="'Segoe UI', Inter, Arial, Helvetica, sans-serif" font-size="21">Ваше пространство для макросов, групп и комфортной игры</text>
+  <rect x="216" y="248" width="470" height="2" fill="url(#hairline)" />
+
+  <!-- Технологии -->
+  <g font-family="'Segoe UI', Inter, Arial, Helvetica, sans-serif" font-size="14">
+    <rect x="216" y="272" width="140" height="36" rx="18" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.1" />
+    <text x="286" y="295" fill="#cfcbe2" text-anchor="middle">Windows 10 / 11</text>
+    <rect x="368" y="272" width="118" height="36" rx="18" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.1" />
+    <text x="427" y="295" fill="#cfcbe2" text-anchor="middle">Electron 38</text>
+    <rect x="498" y="272" width="106" height="36" rx="18" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.1" />
+    <text x="551" y="295" fill="#cfcbe2" text-anchor="middle">React 19</text>
+    <rect x="616" y="272" width="112" height="36" rx="18" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.1" />
+    <text x="672" y="295" fill="#cfcbe2" text-anchor="middle">Supabase</text>
+  </g>
+
+  <!-- Окно приложения: декоративный макет -->
+  <text x="1126" y="78" fill="#8d8aa6" text-anchor="end" font-family="'Segoe UI', Inter, Arial, Helvetica, sans-serif" font-size="15">v1.2.0 · Windows x64</text>
+  <g transform="translate(742 104)">
+    <rect width="400" height="228" rx="22" fill="#ffffff" fill-opacity="0.035" stroke="#ffffff" stroke-opacity="0.09" />
+    <circle cx="26" cy="26" r="4" fill="#ffffff" fill-opacity="0.22" />
+    <circle cx="42" cy="26" r="4" fill="#ffffff" fill-opacity="0.16" />
+    <circle cx="58" cy="26" r="4" fill="#ffffff" fill-opacity="0.12" />
+    <rect x="142" y="18" width="116" height="16" rx="8" fill="#ffffff" fill-opacity="0.06" />
+    <rect x="18" y="52" width="72" height="158" rx="14" fill="#ffffff" fill-opacity="0.045" />
+    <rect x="30" y="68" width="48" height="9" rx="4.5" fill="#9b8ad6" fill-opacity="0.75" />
+    <rect x="30" y="90" width="40" height="8" rx="4" fill="#ffffff" fill-opacity="0.16" />
+    <rect x="30" y="110" width="46" height="8" rx="4" fill="#ffffff" fill-opacity="0.12" />
+    <rect x="30" y="130" width="34" height="8" rx="4" fill="#ffffff" fill-opacity="0.12" />
+    <rect x="30" y="150" width="44" height="8" rx="4" fill="#ffffff" fill-opacity="0.1" />
+    <circle cx="54" cy="188" r="11" fill="none" stroke="#9b8ad6" stroke-opacity="0.7" stroke-width="3" />
+    <path d="M54 177a11 11 0 0 1 10.6 8" fill="none" stroke="#e9e4ff" stroke-width="3" stroke-linecap="round" />
+    <rect x="106" y="52" width="276" height="52" rx="14" fill="#ffffff" fill-opacity="0.05" />
+    <rect x="122" y="68" width="120" height="10" rx="5" fill="#ffffff" fill-opacity="0.26" />
+    <rect x="122" y="86" width="168" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.12" />
+    <rect x="106" y="116" width="130" height="94" rx="14" fill="#ffffff" fill-opacity="0.05" />
+    <rect x="252" y="116" width="130" height="94" rx="14" fill="#ffffff" fill-opacity="0.05" />
+    <rect x="120" y="132" width="60" height="8" rx="4" fill="#ffffff" fill-opacity="0.2" />
+    <rect x="120" y="148" width="86" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.11" />
+    <rect x="266" y="132" width="60" height="8" rx="4" fill="#ffffff" fill-opacity="0.2" />
+    <rect x="266" y="148" width="86" height="7" rx="3.5" fill="#ffffff" fill-opacity="0.11" />
+    <path d="M120 196 L142 176 L164 190 L186 168 L208 182" fill="none" stroke="url(#accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M266 200 L290 186 L314 192 L338 170 L362 178" fill="none" stroke="#8fb9a8" stroke-opacity="0.75" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    <rect x="106" y="220" width="276" height="6" rx="3" fill="#ffffff" fill-opacity="0.07" />
+  </g>
+</svg>

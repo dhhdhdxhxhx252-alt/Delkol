@@ -1,0 +1,89 @@
+/*
+  Delkol desktop (Electron) additions.
+
+  The app's own topbar (breadcrumbs, notifications, share) doubles as the
+  navbar of the frameless window: it is the drag region, and real window
+  controls are injected at its right edge. No extra bar above the UI.
+
+  Rounded-window strategy:
+   - Windows 11 (build 22000+): native DWM rounding; window fully opaque.
+   - Windows 10: transparent BrowserWindow; .workspace-desktop paints the
+     rounded card (html gets the `delkol-rounded` class from desktop.tsx).
+*/
+:root {
+  --win-radius: 10px;
+}
+
+/* ---------- Rounded window (Windows 10 fallback) ---------- */
+
+html.delkol-rounded,
+html.delkol-rounded body {
+  background: transparent !important;
+}
+
+html.delkol-rounded .workspace-desktop {
+  background: #101012;
+  border-radius: var(--win-radius);
+  overflow: hidden;
+}
+
+/* Corner helpers for the transparent fallback (Win11 clips natively). */
+html.delkol-rounded .icon-rail {
+  border-top-left-radius: var(--win-radius);
+  border-bottom-left-radius: var(--win-radius);
+}
+html.delkol-rounded .topbar {
+  border-top-right-radius: var(--win-radius);
+}
+html.delkol-rounded .statusbar {
+  border-bottom-right-radius: var(--win-radius);
+}
+
+/* ---------- Glass rim frame (src/glassFrame.ts) ---------- */
+
+/* With the glass frame the window is transparent on every platform, so the
+   rounded-card fallback classes now apply on Win11 too; radius comes from
+   glassFrame.css (--glass-radius). */
+html.delkol-rounded.glass-frame {
+  --win-radius: var(--glass-radius);
+}
+
+/* When the glass frame is mounted but CSS rounding is not needed (Win11),
+   the transparent window still needs the rounded app card. */
+html.glass-frame:not(.delkol-rounded) .workspace-desktop {
+  border-radius: var(--glass-radius);
+  overflow: hidden;
+}
+html.glass-frame:not(.delkol-rounded) .icon-rail {
+  border-top-left-radius: var(--glass-radius);
+  border-bottom-left-radius: var(--glass-radius);
+}
+html.glass-frame:not(.delkol-rounded) .topbar {
+  border-top-right-radius: var(--glass-radius);
+}
+html.glass-frame:not(.delkol-rounded) .statusbar {
+  border-bottom-right-radius: var(--glass-radius);
+}
+
+/* ---------- Topbar = drag region (custom navbar) ---------- */
+
+.topbar {
+  -webkit-app-region: drag;
+  user-select: none;
+}
+
+/* Interactive elements inside the topbar stay clickable. */
+.topbar button,
+.topbar input,
+.topbar select,
+.topbar a,
+.topbar .dropdown,
+.topbar .menu-dismiss {
+  -webkit-app-region: no-drag;
+}
+
+/* Hide the simulated in-page window controls (direct child of .topbar-actions);
+   the injected real ones live inside #dt-window-controls. */
+.topbar-actions > .window-controls {
+  display: none !important;
+}

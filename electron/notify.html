@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Delkol — OS notification popup content.
+       Deliberately framework-free: a popup must paint instantly, not after a
+       1.3MB bundle parse (three of those in a burst is what produced empty
+       windows on slower machines). Same design language as the app. -->
+  <style>
+    :root { color-scheme: dark; }
+    html, body {
+      margin: 0; padding: 0;
+      background: #17151C; /* must match backgroundColor in notifications.cjs */
+      overflow: hidden;
+      user-select: none;
+      cursor: default;
+      font-family: 'Manrope', 'Segoe UI', sans-serif;
+    }
+    .notify-card {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 11px;
+      padding: 14px 12px 16px 14px;
+      background: linear-gradient(160deg, #3A3844, #2E2C36);
+      border: 1px solid #FFFFFF1C;
+      box-shadow: inset 0 1px 0 #FFFFFF08;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateX(28px);
+      transition: opacity .22s ease, transform .26s cubic-bezier(.2, .7, .3, 1);
+    }
+    .notify-card.is-in { opacity: 1; transform: translateX(0); }
+
+    /* Left accent glow per type */
+    .notify-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 14%; bottom: 14%;
+      width: 3px;
+      border-radius: 3px;
+    }
+    .notify-success::before { background: linear-gradient(#9BD3B4, #5E9678); box-shadow: 0 0 12px #99BDA680; }
+    .notify-info::before    { background: linear-gradient(#C9A9F2, #8E64D8); box-shadow: 0 0 12px #B69CDD80; }
+    .notify-warning::before { background: linear-gradient(#F2C79A, #D89458); box-shadow: 0 0 12px #DDAD7E80; }
+
+    .notify-orb {
+      display: grid;
+      place-items: center;
+      width: 37px; height: 37px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .notify-orb svg { width: 17px; height: 17px; }
+    .notify-success .notify-orb { background: radial-gradient(circle at 30% 25%, #B9E2C9, #6FA98A); color: #17281E; box-shadow: 0 4px 14px #6FA98A55; }
+    .notify-info    .notify-orb { background: radial-gradient(circle at 30% 25%, #D6BCF5, #9668DE); color: #F4EDFD; box-shadow: 0 4px 14px #9668DE55; }
+    .notify-warning .notify-orb { background: radial-gradient(circle at 30% 25%, #F6D5AC, #DE9B5F); color: #33210F; box-shadow: 0 4px 14px #DE9B5F55; }
+
+    /* One icon per type — hidden until the payload class lands on the card. */
+    .notify-orb svg { display: none; }
+    .notify-success .icon-success { display: block; }
+    .notify-info    .icon-info    { display: block; }
+    .notify-warning .icon-warning { display: block; }
+
+    .notify-body { display: grid; gap: 3px; min-width: 0; }
+    .notify-body strong {
+      font-size: 11.5px;
+      font-weight: 650;
+      letter-spacing: .02em;
+      color: #D8D7E3;
+    }
+    .notify-body p {
+      margin: 0;
+      font-size: 11px;
+      line-height: 16px;
+      color: #A9A7BA;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+    }
+
+    .notify-close {
+      display: grid;
+      place-items: center;
+      width: 22px; height: 22px;
+      margin: -14px -3px -8px 0;
+      align-self: start;
+      background: transparent;
+      border: 0;
+      border-radius: 7px;
+      color: #8E8B9C;
+      cursor: pointer;
+      padding: 0;
+    }
+    .notify-close:hover { background: #FFFFFF12; color: #E4E0EE; }
+    .notify-close svg { width: 13px; height: 13px; }
+
+    .notify-life {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 2px;
+      transform-origin: left;
+      transform: scaleX(1);
+    }
+    .notify-success .notify-life { background: linear-gradient(90deg, #9BD3B4, #6FA98A); }
+    .notify-info    .notify-life { background: linear-gradient(90deg, #C9A9F2, #8E64D8); }
+    .notify-warning .notify-life { background: linear-gradient(90deg, #F2C79A, #D89458); }
+    .notify-life.is-running { animation: notify-life-bar linear forwards; }
+    .notify-card:hover .notify-life { animation-play-state: paused; }
+    @keyframes notify-life-bar {
+      from { transform: scaleX(1); }
+      to   { transform: scaleX(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .notify-card { transition: none; }
+      .notify-life.is-running { animation-play-state: paused; }
+    }
+  </style>
+</head>
+<body>
+  <div class="notify-card" id="card" role="status">
+    <span class="notify-orb">
+      <svg class="icon-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      <svg class="icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <svg class="icon-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 20h16a2 2 0 0 0 1.73-2Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+    </span>
+    <span class="notify-body">
+      <strong id="title"></strong>
+      <p id="text"></p>
+    </span>
+    <button class="notify-close" id="close" aria-label="Закрыть уведомление">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <i class="notify-life" id="life"></i>
+  </div>
+
+  <script>
+    const bridge = window.delkol;
+    const id = new URLSearchParams(location.search).get('id') || '';
+    const card = document.getElementById('card');
+    const life = document.getElementById('life');
+
+    async function load() {
+      if (!bridge || !bridge.notifyPayload) return;
+      const payload = await bridge.notifyPayload(id);
+      if (!payload) return;
+      document.getElementById('title').textContent = payload.title;
+      document.getElementById('text').textContent = payload.text;
+      const type = ['success', 'info', 'warning'].includes(payload.type) ? payload.type : 'success';
+      card.classList.add(`notify-${type}`);
+      life.style.animationDuration = `${payload.lifetimeMs || 4500}ms`;
+      // Next frame so the transition actually plays.
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        card.classList.add('is-in');
+        life.classList.add('is-running');
+      }));
+    }
+
+    card.addEventListener('mouseenter', () => bridge?.notifyHover?.(id, true));
+    card.addEventListener('mouseleave', () => bridge?.notifyHover?.(id, false));
+    card.addEventListener('click', () => bridge?.notifyFocusApp?.(id));
+    document.getElementById('close').addEventListener('click', (event) => {
+      event.stopPropagation();
+      bridge?.notifyClose?.(id);
+    });
+
+    void load();
+  </script>
+</body>
+</html>

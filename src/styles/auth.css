@@ -1,0 +1,405 @@
+/* ============================== Phase layers ============================== */
+.phase-layer { height: 100dvh; }
+
+/* Brief splash while the main Electron window resolves the session. */
+.boot-splash { height: 100dvh; background: #0c0c0d; }
+
+/* ============================ Loading window ============================== */
+.loading-screen {
+  position: relative;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+  background: #000;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+}
+
+.loading-card {
+  position: relative;
+  width: min(668px, calc(100vw - 48px));
+  aspect-ratio: 668 / 416;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #040404;
+  box-shadow: 0 24px 80px #000000d0, 0 4px 18px #00000090;
+  isolation: isolate;
+}
+
+.loading-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  animation: bunny-reveal 1.4s ease-out both;
+}
+
+@keyframes bunny-reveal {
+  from { opacity: 0; transform: scale(1.045); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.loading-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% 42%, #00000000 40%, #00000058 78%, #000000b0 100%),
+    linear-gradient(180deg, #00000066 0%, #00000000 22%, #00000000 62%, #000000a8 100%);
+  pointer-events: none;
+}
+
+.loading-brand {
+  position: absolute;
+  top: 21px;
+  left: 26px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #f4f5f7;
+}
+
+.loading-brand-mark { display: grid; place-items: center; width: 24px; height: 24px; color: #FFF; filter: drop-shadow(0 1px 3px #00000090); }
+.loading-brand-mark .delkol-mark { width: 24px; height: 24px; }
+.loading-brand-name { font-size: 12.5px; font-weight: 500; letter-spacing: .1px; color: #f2f2f4; text-shadow: 0 1px 6px #000000a0; }
+
+.loading-footer {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  bottom: 18px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  color: #e8e9ec;
+}
+
+.loading-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  color: #f1f1f3;
+  text-shadow: 0 1px 6px #000000a0;
+}
+.loading-status svg { color: #FFF; }
+
+.loading-stage {
+  font-size: 10px;
+  color: #b8bac0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 6px #000000a0;
+}
+
+.loading-about {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: #eeeef1;
+  white-space: nowrap;
+  text-shadow: 0 1px 6px #000000a0;
+}
+.loading-about i { display: inline-block; width: 1px; height: 11px; background: #FFFFFF55; }
+.loading-about svg { color: #FFF; }
+
+.loading-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2.5px;
+  background: #FFFFFF12;
+}
+.loading-progress span { display: block; height: 100%; background: linear-gradient(90deg, #8f95b1, #bec1d2); border-radius: 0 3px 3px 0; box-shadow: 0 0 10px #8f95b188; }
+
+@media (max-width: 560px) {
+  .loading-stage { display: none; }
+  .loading-card { width: calc(100vw - 28px); border-radius: 14px; }
+}
+
+/* ======================= Login / Registration window ====================== */
+.auth-screen {
+  position: relative;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #040509;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Electron mode: the window itself is the login card — no backdrop, no padding. */
+.auth-screen.is-electron { background: #06070a; place-items: stretch; }
+.auth-screen.is-electron .auth-card {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  border-radius: 0;
+  border: 0;
+  box-shadow: none;
+  padding: 0 40px 26px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+/* Flex column ignores text-align: center flex items explicitly. */
+.auth-screen.is-electron .auth-hero { margin: 0 -40px; height: 178px; position: relative; }
+/* Soft blend into the card instead of a hard cut. */
+.auth-hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 62%;
+  background: linear-gradient(180deg, #06070a00 0%, #06070aD9 62%, #06070a 100%);
+  pointer-events: none;
+}
+.auth-screen.is-electron .auth-whale { align-self: center; position: relative; z-index: 1; margin-top: -44px; }
+/* Distribute leftover height: form centers itself, footer pins to the bottom. */
+.auth-screen.is-electron .auth-form { flex: 1 1 auto; justify-content: center; }
+.auth-screen.is-electron .auth-card-footer { margin-top: auto; }
+.auth-window-bar .window-controls { margin-right: 0; padding-left: 6px; border-left: 0; gap: 2px; }
+
+.auth-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  animation: cosmos-drift 26s ease-in-out infinite alternate;
+}
+
+@keyframes cosmos-drift {
+  from { transform: scale(1.02) translateY(0); }
+  to { transform: scale(1.09) translateY(-12px); }
+}
+
+.auth-bg-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #03030780 0%, #030307E6 58%, #030307F8 100%);
+  pointer-events: none;
+}
+
+/* Frameless window bar: drag region + native-style controls. */
+.auth-window-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 0 16px;
+  -webkit-app-region: drag;
+  user-select: none;
+}
+.auth-window-bar button { -webkit-app-region: no-drag; }
+.auth-window-title { font-size: 10.5px; color: #8E93A8; letter-spacing: .2px; }
+
+.auth-card {
+  position: relative;
+  z-index: 1;
+  width: min(392px, calc(100vw - 40px));
+  border-radius: 20px;
+  padding: 0 34px 24px;
+  background: linear-gradient(180deg, #06070aF2, #050609F7);
+  border: 1px solid #262B3D;
+  box-shadow: 0 30px 90px #000000C8, inset 0 1px 0 #FFFFFF0A;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Card header ("шапка") — cosmic orb artwork across the top. */
+.auth-hero {
+  margin: 0 -34px;
+  height: 150px;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+  background: #040509 center / cover no-repeat;
+}
+.auth-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+  animation: hero-drift 22s ease-in-out infinite alternate;
+}
+@keyframes hero-drift {
+  from { transform: scale(1.04) translateY(0); }
+  to { transform: scale(1.1) translateY(-7px); }
+}
+
+/* Legacy orb hidden: replaced by the .auth-hero artwork. */
+.auth-orb { display: none; }
+
+.auth-whale {
+  position: relative;
+  align-self: center;
+  display: inline-grid;
+  place-items: center;
+  width: 74px;
+  height: 74px;
+  margin-top: -40px;
+  color: #FFF;
+  z-index: 1;
+  filter: drop-shadow(0 4px 14px #000000AA);
+}
+.auth-whale .delkol-mark { width: 70px; height: 70px; }
+
+.auth-title {
+  margin-top: 12px;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 31px;
+  font-weight: 650;
+  letter-spacing: -.8px;
+  color: #f4f4f6;
+}
+
+.auth-tagline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 12px auto 0;
+  max-width: 300px;
+  font-size: 10.5px;
+  line-height: 15px;
+  color: #8E93A8;
+}
+.auth-tagline svg { color: #d8dae0; flex-shrink: 0; }
+
+.auth-form { display: flex; flex-direction: column; gap: 11px; margin-top: 25px; }
+
+.auth-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 47px;
+  border-radius: 24px;
+  border: 1px solid #2E3448;
+  background: #080a0f;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.auth-field:focus-within { border-color: #7d87b6; box-shadow: 0 0 0 3px #7d87b622; }
+.auth-field-icon { display: grid; place-items: center; width: 40px; color: #6E7488; }
+.auth-field input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  background: none;
+  border: 0;
+  padding: 0 16px 0 0;
+  font-size: 12.5px;
+  color: #ededf0;
+}
+.auth-field input::placeholder { color: #626879; }
+.auth-eye {
+  position: absolute;
+  right: 6px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: #6E7488;
+  transition: color .16s ease;
+}
+.auth-eye:hover { color: #cacbd3; }
+
+.auth-message { margin: 1px 4px; font-size: 10.5px; line-height: 15px; text-align: left; }
+.auth-message.error { color: #E58B9B; }
+.auth-message.ok { color: #9DC5AC; }
+
+.auth-link {
+  align-self: center;
+  margin-top: 1px;
+  font-size: 11.5px;
+  color: #9BA1B5;
+  transition: color .16s ease;
+}
+.auth-link:hover { color: #dadbe3; }
+
+.auth-or-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 7px 0 3px;
+  color: #7A8095;
+  font-size: 10.5px;
+}
+.auth-or-row::before, .auth-or-row::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(90deg, #2E344800, #2E3448 30%, #2E3448 70%, #2E344800);
+}
+.auth-or-row > span { position: absolute; width: 0; height: 0; overflow: hidden; }
+.auth-or-row { gap: 13px; }
+
+.auth-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 47px;
+  border-radius: 24px;
+  border: 1px solid #a2a9cd;
+  background: linear-gradient(180deg, #939bc5, #7c86b8);
+  color: #FFF;
+  font-size: 13px;
+  font-weight: 550;
+  letter-spacing: .1px;
+  box-shadow: 0 10px 26px #747eb255, inset 0 1px 0 #FFFFFF2E;
+  transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+}
+.auth-submit:hover:not(:disabled) { filter: brightness(1.07); box-shadow: 0 12px 30px #747eb26E, inset 0 1px 0 #FFFFFF33; }
+.auth-submit:active:not(:disabled) { transform: translateY(1px); }
+.auth-submit:disabled { opacity: .72; cursor: default; }
+
+.auth-spinner { animation: auth-spin 1s linear infinite; }
+@keyframes auth-spin { to { transform: rotate(360deg); } }
+
+.auth-switch {
+  align-self: center;
+  margin-top: 4px;
+  font-size: 11.5px;
+  color: #a2a8c6;
+  transition: color .16s ease;
+}
+.auth-switch:hover { color: #c7cbe1; }
+
+.auth-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #232839;
+}
+.auth-foot-link { font-size: 10.5px; color: #79809Acc; transition: color .16s ease; }
+.auth-foot-link:hover { color: #c5c6ce; }
+.auth-foot-brand { font-size: 10.5px; color: #6E7488; }
+
+@media (max-height: 760px) {
+  .auth-card { padding-top: 0; }
+  .auth-whale { margin-top: -32px; width: 62px; height: 62px; }
+  .auth-whale .delkol-mark { width: 58px; height: 58px; }
+  .auth-hero { height: 138px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-bg, .auth-hero img { animation: none; }
+}

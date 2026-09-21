@@ -1,0 +1,174 @@
+/* ============================== Community: Топ конфиги ============================== */
+.community-loading { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 60px 0; color: #8F8FA4; font-size: 11px; }
+.community-loading .spin-icon { color: #aaafc5; }
+
+.community-top-list { display: flex; flex-direction: column; }
+.community-config-row { display: flex; align-items: center; gap: 14px; padding: 14px 10px 14px 6px; border-bottom: 1px solid #2E2E34; transition: background .16s; }
+.community-config-row:hover { background: #13131666; }
+.community-config-row.is-top { background: linear-gradient(90deg, #8f95b112 0%, #8f95b100 70%); }
+
+/* Аватарка автора в топе: рамки из магазина поверх круглой аватарки */
+.top-author-avatar { position: relative; display: inline-flex; flex-shrink: 0; }
+.top-author-avatar .user-avatar { overflow: hidden; box-shadow: 0 2px 6px #0a0a0c2E; transition: transform .25s cubic-bezier(.2,.7,.3,1.1), box-shadow .18s, border-color .18s; }
+.top-author-avatar .user-avatar > img { border-radius: 50%; }
+.top-author-avatar .user-avatar.has-frame { overflow: visible; }
+.top-author-avatar .user-avatar.has-frame > img { position: relative; z-index: 0; }
+.top-author-avatar .user-avatar.has-frame .avatar-frame { inset: -19%; width: 138%; height: 138%; }
+.top-author-avatar .user-avatar.has-frame:hover { transform: translateY(-1px); box-shadow: 0 4px 10px #0a0a0c3D; }
+
+.community-rank { width: 30px; height: 30px; flex-shrink: 0; display: grid; place-items: center; border-radius: 9px; font-family: 'Manrope', sans-serif; font-size: 12px; font-weight: 650; color: #8e9099; background: #151418; border: 1px solid #37353E; }
+.community-rank.rank-gold { color: #171208; background: linear-gradient(150deg, #FFE9A8, #E9B84F); border-color: #F2CE74; box-shadow: 0 0 12px #E9B84F55; }
+.community-rank.rank-silver { color: #131317; background: linear-gradient(150deg, #F1F1F6, #B9BAC6); border-color: #D6D7E0; }
+.community-rank.rank-bronze { color: #160e08; background: linear-gradient(150deg, #F0C6A0, #C08050); border-color: #D69A6B; }
+
+.community-config-copy { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.community-config-copy strong { font-size: 12.5px; font-weight: 550; color: #dddee6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.community-config-author { display: flex; align-items: center; gap: 7px; font-size: 9.5px; color: #9598AC; }
+.community-frame-chip { font-style: normal; font-size: 8px; padding: 1px 6px; border-radius: 7px; background: #36323D; border: 1px solid #4c4e55; color: #bdc2db; }
+.community-config-copy p { font-size: 9.5px; color: #7F8290; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 460px; }
+
+.community-config-stats { display: flex; align-items: center; gap: 13px; margin-top: 2px; }
+.community-stat { display: inline-flex; align-items: center; gap: 4px; font-size: 9.5px; color: #86889A; font-variant-numeric: tabular-nums; }
+.community-stat svg { color: #6F7284; }
+
+.community-config-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.community-react { display: inline-flex; align-items: center; gap: 5px; height: 27px; padding: 0 9px; border-radius: 7px; border: 1px solid #37353E; background: #28292e; color: #9594A8; font-size: 10px; transition: color .15s, border-color .15s, background .15s; font-variant-numeric: tabular-nums; }
+.community-react:hover { color: #dee1ec; border-color: #54555d; }
+.community-react.like.active { color: #FF8FA8; border-color: #A04A62; background: #3A2830; }
+.community-react.like.active svg { fill: #FF8FA8; }
+.community-react.dislike.active { color: #9FB4E0; border-color: #4A5A85; background: #262D3D; }
+.community-download { height: 27px; font-size: 10px; padding: 0 11px; }
+
+/* ============================== Community: Магазин ============================== */
+.shop-wrap { display: flex; flex-direction: column; gap: 15px; }
+.shop-topline { display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
+.shop-section-switch { display: inline-flex; align-items: center; gap: 3px; padding: 3px; border-radius: 8px; background: #101013; border: 1px solid #2E2E36; }
+.shop-section-switch > button { height: 29px; padding: 0 14px; border-radius: 6px; font-size: 10.5px; color: #9595A8; transition: background .15s, color .15s; }
+.shop-section-switch > button:hover { color: #dfe0e4; }
+.shop-section-switch > button.active { background: #2C2E36; color: #eff0f4; box-shadow: inset 0 1px 0 #FFFFFF08; }
+.shop-balance { display: inline-flex; align-items: baseline; gap: 8px; padding: 8px 15px; border-radius: 9px; background: #101013; border: 1px solid #3E3629; color: #F0DFA8; }
+.shop-balance svg { align-self: center; color: #E9C96A; }
+.shop-balance span { font-family: 'Manrope', sans-serif; font-size: 17px; font-weight: 650; letter-spacing: -.3px; }
+.shop-balance small { font-size: 9.5px; color: #A29EB8; }
+
+.shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 13px; }
+/* Рамки: прозрачный чип, показываем только SVG-рамку — не как аватарки */
+.shop-frame-card { align-items: center; }
+.shop-frame-preview { position: relative; display: grid; place-items: center; width: 84px; height: 84px; border-radius: 14px; background: radial-gradient(circle at 35% 30%, #121216, #0c0c0e); border: 1px solid #2A2A31; }
+.shop-frame-art { position: relative; width: 64px; height: 64px; }
+.shop-preview-none { color: #686C7C; font-size: 20px; }
+.shop-card { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 17px 12px 13px; border-radius: 11px; background: #101013; border: 1px solid #2E2E36; transition: border-color .18s, transform .18s, box-shadow .18s; }
+.shop-card:hover { transform: translateY(-2px); border-color: #3D4049; }
+.shop-card.rarity-rare { border-color: #34506B; }
+.shop-card.rarity-epic { border-color: #3E7D78; }
+.shop-card.rarity-legendary { border-color: #7A5B33; box-shadow: inset 0 0 24px #E9B84F0E; }
+.shop-card.equipped { border-color: #6F8F7C; background: #121413; }
+
+.shop-preview { position: relative; display: grid; place-items: center; width: 74px; height: 74px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #2C303A, #0e0e11); overflow: hidden; }
+
+.shop-card strong { font-size: 11.5px; font-weight: 550; color: #e0e1e5; }
+.shop-card em { font-style: normal; font-size: 8.5px; letter-spacing: .4px; text-transform: uppercase; color: #868BA0; }
+.shop-card.rarity-rare em { color: #7FB2E0; }
+.shop-card.rarity-epic em { color: #6FCFC4; }
+.shop-card.rarity-legendary em { color: #E9C96A; }
+
+.shop-card-footer { min-height: 27px; display: flex; align-items: center; }
+.shop-buy { height: 26px; font-size: 10px; padding: 0 11px; gap: 6px; }
+.shop-state { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; color: #A4C7AF; }
+.equipped-state { color: #9FC7B0; }
+
+.shop-guest-note { display: flex; align-items: center; gap: 8px; font-size: 10px; color: #8F8B96; padding: 11px 13px; border: 1px dashed #413F4C; border-radius: 8px; }
+
+/* --- Раздел аватарок --- */
+.shop-avatars-hint { font-size: 10px; line-height: 17px; color: #8F8B96; }
+.shop-avatar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 10px; }
+.shop-avatar-tile { position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; border: 1px solid #2E2E36; background: #101013; transition: border-color .15s, transform .15s; }
+.shop-avatar-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shop-avatar-tile:hover { border-color: #9FB3DE; transform: translateY(-2px); }
+.shop-avatar-tile.selected { border-color: #9FB3DE; box-shadow: 0 0 0 1px #9FB3DE; }
+.shop-avatar-tile.selected i { position: absolute; right: 4px; bottom: 4px; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: #7E9ECB; color: #080a0d; }
+
+/* ============================== Profile: stats + frame gallery ============================== */
+.profile-stats-row { display: flex; align-items: center; gap: 14px; margin-top: 10px; }
+.profile-stats-row > i { width: 2px; height: 2px; border-radius: 50%; background: #7A7284; }
+.profile-stat { display: inline-flex; align-items: baseline; gap: 5px; }
+.profile-stat strong { font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 650; color: #dcdeea; letter-spacing: -.3px; }
+.profile-stat small { font-size: 9px; color: #8F8C9C; }
+.profile-stat.coins strong { color: #EBD08A; }
+
+.profile-frame-gallery { display: flex; flex-wrap: wrap; gap: 9px; }
+.profile-frame-option { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 8px 7px 6px; border-radius: 9px; border: 1px solid transparent; transition: background .15s, border-color .15s; min-width: 64px; }
+.profile-frame-option:hover { background: #141416; }
+.profile-frame-option.selected { background: #2b2b2f; border-color: #737687; }
+.profile-frame-thumb { position: relative; display: grid; place-items: center; width: 40px; height: 40px; }
+.profile-frame-thumb > .avatar-frame { position: static; inset: auto; width: 40px; height: 40px; }
+.profile-frame-thumb::before { content: ''; position: absolute; inset: 7px; border-radius: 50%; background: linear-gradient(145deg, #7E88A0, #484E5C); }
+.profile-frame-thumb > * { position: relative; }
+.profile-frame-none { color: #929AB0; font-size: 13px; }
+.profile-frame-option small { font-size: 8.5px; color: #9BA0B2; }
+.profile-frame-option.selected small { color: #ced1de; }
+.profile-frame-more .profile-frame-thumb { border: 1px dashed #54555d; border-radius: 50%; color: #bec2d3; }
+.profile-frame-hint { grid-column: 2; font-size: 9px; color: #7F8494; margin-top: 6px; }
+
+/* ============================== Галерея аватаров ============================== */
+.profile-avatar-gallery { grid-column: 2; display: grid; grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 8px; max-height: 300px; overflow-y: auto; padding: 11px; border: 1px solid #34343A; border-radius: 9px; background: #101012; scrollbar-width: thin; }
+.profile-avatar-option { position: relative; aspect-ratio: 1; border-radius: 9px; overflow: hidden; border: 1px solid transparent; transition: border-color .15s, transform .15s; }
+.profile-avatar-option img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.profile-avatar-option:hover { border-color: #a9aec4; transform: translateY(-1px); }
+.profile-avatar-option.selected { border-color: #a9aec4; box-shadow: 0 0 0 1px #a9aec4; }
+.profile-avatar-option.selected i { position: absolute; right: 3px; bottom: 3px; display: grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; background: #8f95b1; color: #FFF; }
+.profile-text-action .rotated { transform: rotate(90deg); }
+
+@media (max-width: 760px) {
+  .community-config-row { flex-wrap: wrap; }
+  .community-config-actions { margin-left: 44px; }
+  .community-config-copy p { max-width: none; }
+  .profile-frame-gallery { gap: 6px; }
+}
+
+/* ============================== Discord-style профиль-попап (компактный) ============================== */
+.profile-pop-backdrop { position: fixed; inset: 0; z-index: 190; background: transparent; }
+.profile-pop { position: fixed; width: 216px; max-width: calc(100vw - 16px); border-radius: 12px; border: 1px solid #FFFFFF16; background: #0e0e10; box-shadow: 0 22px 60px #03030670, 0 6px 18px #03030633, inset 0 1px 0 #FFFFFF0C; overflow: hidden; }
+
+.profile-pop-cover { position: relative; height: 66px; overflow: hidden; isolation: isolate; }
+.profile-pop-cover img { width: 100%; height: 100%; object-fit: cover; }
+.profile-pop-cover .panel-frame { color: #d7d8df; opacity: .7; }
+.profile-pop-shade { position: absolute; inset: 0; background: linear-gradient(180deg, #0e0e1008 0%, #0e0e1099 86%, #0e0e10D9 100%); }
+.profile-pop-close { position: absolute; top: 4px; right: 4px; z-index: 2; display: inline-flex; height: 18px; width: 18px; align-items: center; justify-content: center; border-radius: 5px; background: #09090bA8; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.profile-pop-close .icon-button { width: 18px; height: 18px; color: #e5e6eb; border-radius: 5px; }
+.profile-pop-close .icon-button > svg { width: 10px; height: 10px; }
+.profile-pop-close .icon-button:hover { background: #FFFFFF10; color: #FFF; }
+
+/* Крупная аватарка наполовину перекрывает обложку — как на референсе */
+.profile-pop-head { position: relative; height: 0; }
+.profile-pop-avatar { position: absolute; left: 12px; top: -28px; display: inline-flex; border-radius: 50%; background: #0e0e10; padding: 3px; }
+.profile-pop-avatar::before { content: ''; position: absolute; inset: 0; border-radius: 50%; box-shadow: inset 0 0 0 1px #FFFFFF12; }
+
+.profile-pop-body { padding: 2px 12px 12px; }
+.profile-pop-name { display: flex; align-items: baseline; gap: 6px; margin-top: 32px; }
+.profile-pop-name h3 { font-family: 'Manrope', sans-serif; font-size: 14.5px; font-weight: 650; letter-spacing: -.35px; color: #eff0f4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.profile-pop-handle { display: block; font-size: 9px; color: #8E8EA2; margin-top: 2px; }
+.profile-pop-frame { font-style: normal; font-size: 6.5px; padding: 1px 5px; border-radius: 6px; background: #32353E; border: 1px solid #4c4e55; color: #bbbecf; text-transform: uppercase; letter-spacing: .4px; margin-left: auto; flex-shrink: 0; }
+.profile-pop-bio { margin: 7px 0 0; font-size: 9.5px; line-height: 15px; color: #b7b9c6; overflow-wrap: anywhere; }
+
+.profile-pop-stats { display: flex; align-items: baseline; gap: 8px; margin-top: 9px; }
+.profile-pop-stats > span { display: inline-flex; align-items: baseline; gap: 3px; min-width: 0; }
+.profile-pop-stats strong { font-family: 'Manrope', sans-serif; font-size: 11px; font-weight: 650; color: #dfe0e6; letter-spacing: -.1px; }
+.profile-pop-stats small { font-size: 8px; color: #8A8A9C; white-space: nowrap; }
+.profile-pop-stats .coins strong { color: #E9D5A4; }
+
+.profile-pop-actions { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+.profile-pop-action { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 4px; height: 26px; padding: 0 8px; border-radius: 999px; background: #F1F0F6; border: 1px solid transparent; color: #0c0c0e; font-size: 9.5px; font-weight: 600; transition: background .15s, transform .15s, color .15s; }
+.profile-pop-action:hover { background: #FFFFFF; color: #000; transform: translateY(-1px); }
+.profile-pop-action:active { transform: translateY(0); }
+.profile-pop-action > span { color: inherit; }
+.profile-pop-action.secondary { background: #2E3038; border-color: #3D4049; color: #d6d7db; font-weight: 450; }
+.profile-pop-action.secondary:hover { background: #383B45; border-color: #4B4E59; color: #eff0f4; }
+
+@media (max-width: 480px) {
+  .profile-pop { width: 190px; }
+  .profile-pop-cover { height: 56px; }
+  .profile-pop-avatar { left: 9px; top: -24px; }
+  .profile-pop-avatar .user-avatar { width: 48px !important; height: 48px !important; }
+  .profile-pop-body { padding: 2px 10px 10px; }
+}

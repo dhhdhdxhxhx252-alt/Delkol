@@ -1,0 +1,35 @@
+# Electron build configuration for Delkol
+appId: ru.delkol.desktop
+productName: Delkol
+copyright: Delkol
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - electron/**/*
+  - dist-web/**/*
+  - package.json
+
+asar: true
+
+win:
+  icon: build/icon.ico
+  artifactName: ${productName}-${version}-${arch}.${ext}
+  target:
+    - nsis
+    - portable
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Delkol
+  uninstallDisplayName: Delkol
+  artifactName: Delkol-Setup-${version}.${ext}
+
+portable:
+  artifactName: Delkol-Portable-${version}.${ext}

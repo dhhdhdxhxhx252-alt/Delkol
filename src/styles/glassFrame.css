@@ -1,0 +1,202 @@
+/*
+ * Glass frame — slim macOS/Linux-style glassy border for the frameless
+ * Electron window. Active only when <html> has the `glass-frame` class
+ * (added by src/glassFrame.ts; the window itself is transparent — see
+ * electron/main.cjs). Three pointer-transparent layers pinned to the edge:
+ *
+ *   .glass-rim  — translucent 1.5px "glass tube": bright outer edge, dark
+ *                 seam against the content, soft inner refraction.
+ *   .glass-bloom — faint violet light bleeding inward from the glass.
+ *   .glass-spec — rotating conic sheen that travels around the border
+ *                 (the "shader" — a @property-animated conic gradient
+ *                 masked to a 1.5px ring).
+ *
+ * State classes from src/glassFrame.ts:
+ *   glass-frame-max    — maximized/fullscreen: rim hugs the screen edges.
+ *   glass-frame-blur   — window unfocused: everything calms down.
+ */
+
+@property --glass-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+:root {
+  --glass-radius: 12px;
+  --glass-width: 1.5px;
+}
+
+/* ============ Transparent window base ============ */
+
+html.glass-frame,
+html.glass-frame body {
+  background: transparent !important;
+}
+
+/* Keep the app inside the rim: a thin transparent gutter the glass lives in. */
+html.glass-frame #root {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 2 * var(--glass-width));
+  padding: var(--glass-width);
+}
+
+/* Round the actual app card to meet the glass (transparent window has no
+   native DWM rounding, so we paint our own). */
+html.glass-frame #root > * {
+  flex: 1;
+  min-height: 0;
+  border-radius: var(--glass-radius);
+  overflow: hidden;
+}
+
+/* Full-viewport screens must fill the padded root, not overflow it. */
+html.glass-frame .workspace-desktop,
+html.glass-frame .app-shell,
+html.glass-frame .loading-screen,
+html.glass-frame .auth-screen,
+html.glass-frame .boot-splash {
+  height: 100%;
+  min-height: 0;
+}
+
+html.delkol-rounded {
+  --glass-radius: 10px;
+}
+
+/* ============ The glass tube ============ */
+
+.glass-rim {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  pointer-events: none;
+  border-radius: var(--glass-radius);
+  box-shadow:
+    /* Dark seam where glass meets the app. */
+    inset 0 0 0 1px #22232973,
+    /* Refraction just inside the seam. */
+    inset 0 0 0 2px #ffffff0d,
+    /* Bright outer glass edge. */
+    inset 0 0 0 var(--glass-width) #ffffff3d,
+    /* Light spilling through the glass into the app. */
+    inset 0 0 14px #ffffff08;
+  transition: box-shadow 0.35s ease;
+}
+
+/* Top-lit bevel: glass catches light from above, like macOS window rims.
+   A ring masked to the border width, filled with a vertical gradient that
+   is brightest along the top edge. */
+.glass-rim::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--glass-width);
+  background: linear-gradient(
+    180deg,
+    #ffffff5c 0%,
+    #ffffff21 22%,
+    #ffffff09 45%,
+    #ffffff05 62%,
+    #ffffff17 84%,
+    #ffffff33 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+/* ============ Inner bloom (light bleeding off the glass) ============ */
+
+.glass-bloom {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483645;
+  border-radius: var(--glass-radius);
+  pointer-events: none;
+  background:
+    radial-gradient(130% 60% at 50% 0%, #949dc617 0%, transparent 58%),
+    radial-gradient(130% 55% at 50% 100%, #949dc60d 0%, transparent 60%);
+  opacity: 0.9;
+  transition: opacity 0.4s ease;
+}
+
+/* ============ Rotating sheen (the glass shader) ============ */
+
+.glass-spec {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  border-radius: var(--glass-radius);
+  pointer-events: none;
+  padding: var(--glass-width);
+  /* A beam of light that sweeps around the border forever. */
+  background: conic-gradient(
+    from var(--glass-angle) at 50% 50%,
+    transparent 0deg,
+    #ffffff17 18deg,
+    #e4e6f042 34deg,
+    #ffffff78 42deg,
+    #e4e6f042 50deg,
+    #ffffff17 66deg,
+    transparent 90deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0.55;
+  animation: glass-sheen 9s linear infinite;
+  transition: opacity 0.4s ease;
+}
+
+@keyframes glass-sheen {
+  to { --glass-angle: 360deg; }
+}
+
+/* ============ Window state ============ */
+
+/* Unfocused: calm the glass down, like inactive macOS windows. */
+html.glass-frame-blur .glass-rim {
+  box-shadow:
+    inset 0 0 0 1px #2223294d,
+    inset 0 0 0 var(--glass-width) #ffffff21,
+    inset 0 0 10px #ffffff05;
+}
+html.glass-frame-blur .glass-rim::after { opacity: 0.55; }
+html.glass-frame-blur .glass-spec {
+  opacity: 0.22;
+  animation-play-state: paused;
+}
+html.glass-frame-blur .glass-bloom { opacity: 0.45; }
+
+/* Maximized / fullscreen: rim hugs the screen edges. */
+html.glass-frame-max .glass-rim,
+html.glass-frame-max .glass-spec,
+html.glass-frame-max .glass-bloom {
+  border-radius: 0;
+}
+html.glass-frame-max .glass-bloom { opacity: 0.4; }
+html.glass-frame-max #root > *,
+html.glass-frame-max .workspace-desktop {
+  border-radius: 0;
+}
+
+/* ============ Graceful degradation ============ */
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-spec {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
+@supports not (background: conic-gradient(from 0deg, red, blue)) {
+  .glass-spec { display: none; }
+}
