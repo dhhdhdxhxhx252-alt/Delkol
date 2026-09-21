@@ -135,11 +135,7 @@
 <td width="50%"><img src="docs/screenshots/11-notifications.png" alt="Уведомления"><br><sub><b>Уведомления</b> — что произошло, пока вы играли</sub></td>
 </tr>
 <tr>
-<td width="50%"><img src="docs/screenshots/12-theme-light.png" alt="Светлая тема"><br><sub><b>Светлая тема</b> — полная палитра, а не инверсия</sub></td>
 <td width="50%"><img src="docs/screenshots/01-loading.png" alt="Экран загрузки"><br><sub><b>Загрузка</b> — сплэш с собственным артом</sub></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/screenshots/13-hud.png" alt="HUD-пилюля" width="116"><br><sub><b>HUD-пилюля</b> — прогресс макросов у края экрана, всегда поверх и без кражи фокуса</sub></td>
 </tr>
 </table>
 
