@@ -134,9 +134,6 @@
 <td width="50%"><img src="docs/screenshots/08-search.png" alt="Поиск"><br><sub><b>Ctrl + K</b> — одна палитра для разделов, макросов, групп и конфигов</sub></td>
 <td width="50%"><img src="docs/screenshots/11-notifications.png" alt="Уведомления"><br><sub><b>Уведомления</b> — что произошло, пока вы играли</sub></td>
 </tr>
-<tr>
-<td width="50%"><img src="docs/screenshots/01-loading.png" alt="Экран загрузки"><br><sub><b>Загрузка</b> — сплэш с собственным артом</sub></td>
-</tr>
 </table>
 
 ---
