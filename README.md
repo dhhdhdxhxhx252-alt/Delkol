@@ -126,14 +126,6 @@
 <td width="50%"><img src="docs/screenshots/05-groups.png" alt="Группы"><br><sub><b>Группы</b> — макросы, собранные по смыслу и цветам</sub></td>
 <td width="50%"><img src="docs/screenshots/07-logs.png" alt="Журнал"><br><sub><b>Журнал</b> — каждое событие с типом и временем</sub></td>
 </tr>
-<tr>
-<td width="50%"><img src="docs/screenshots/09-settings.png" alt="Настройки"><br><sub><b>Настройки</b> — профиль, темы, уведомления, оптимизация</sub></td>
-<td width="50%"><img src="docs/screenshots/10-profile.png" alt="Профиль"><br><sub><b>Профиль</b> — аватар, рамка, обложка, подписчики</sub></td>
-</tr>
-<tr>
-<td width="50%"><img src="docs/screenshots/08-search.png" alt="Поиск"><br><sub><b>Ctrl + K</b> — одна палитра для разделов, макросов, групп и конфигов</sub></td>
-<td width="50%"><img src="docs/screenshots/11-notifications.png" alt="Уведомления"><br><sub><b>Уведомления</b> — что произошло, пока вы играли</sub></td>
-</tr>
 </table>
 
 ---
