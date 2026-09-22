@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/banner.png" alt="Delkol — ваше пространство для макросов, групп и комфортной игры" width="100%">
+  <img src="docs/banner1.png" alt="Delkol — ваше пространство для макросов, групп и комфортной игры" width="100%">
 </div>
 
 <div align="center">
@@ -115,7 +115,7 @@
 
 Главный экран — обзор рабочего пространства, живая сессия и панель активности:
 
-<img src="docs/screenshots/03-overview.png" alt="Обзор рабочего пространства Delkol" width="100%">
+<img src="docs/screenshots/03-overview — копия.png" alt="Обзор рабочего пространства Delkol" width="100%">
 
 <table>
 <tr>
