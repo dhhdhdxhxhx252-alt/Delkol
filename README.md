@@ -10,7 +10,7 @@
 ![React](https://img.shields.io/badge/React-19-149eca?style=for-the-badge&logo=react&logoColor=white)
 ![Supabase](https://img.shields.io/badge/Supabase-облако-3ecf8e?style=for-the-badge&logo=supabase&logoColor=white)
 
-**[⬇️ Скачать](#-готовые-сборки)** · **[📸 Скриншоты](#-скриншоты)** · **[🛠 Собрать самому](#-сборка-из-исходников)** · **[☁️ База данных](docs/SUPABASE_SETUP.md)**
+**[⬇️ Скачать](#-готовые-сборки)** · **[📸 Скриншоты](#-скриншоты)** · **[🛠 Собрать самому*](#-сборка-из-исходников)** · **[☁️ База данных](docs/SUPABASE_SETUP.md)**
 
 </div>
 
