@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/banner1.png" alt="Delkol — ваше пространство для макросов, групп и комфортной игры" width="100%">
+  <img src="banner1.png" alt="Delkol — ваше пространство для макросов, групп и комфортной игры" width="100%">
 </div>
 
 <div align="center">
